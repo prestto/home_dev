@@ -1,3 +1,4 @@
+#!/bin/bash
 function run_docker_env {
     echo "running docker build"
     docker-compose --project-dir . -f docker/docker-compose.yml up
