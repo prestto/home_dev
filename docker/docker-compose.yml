@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  openproject:
+    image: openproject/community:latest
+    environment:
+      - SECRET_KEY_BASE=jkfrkgherkjgnkjrenern
+    volumes:
+      - /var/lib/openproject/pgdata:/var/openproject/pgdata
+      - /var/lib/openproject/static:/var/openproject/assets
+    ports:
+      - "8080:8080"
+
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.com'
+    ports:
+      - '80:80'
+      - '443:443'
+      - '22:21'
+    volumes:
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
