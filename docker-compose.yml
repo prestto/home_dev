@@ -2,7 +2,7 @@ version: "3"
 
 services:
   gitlab:
-    image: "gitlab/gitlab-ce:latest"
+    image: "ulm0/gitlab"
     restart: always
     hostname: "gitlab.example.com"
     environment:
@@ -16,13 +16,3 @@ services:
       - /srv/gitlab/config:/etc/gitlab
       - /srv/gitlab/logs:/var/log/gitlab
       - /srv/gitlab/data:/var/opt/gitlab
-
-  openproject:
-    image: openproject/community:latest
-    environment:
-      - SECRET_KEY_BASE=jkfrkgherkjgnkjrenern
-    volumes:
-      - /var/lib/openproject/pgdata:/var/openproject/pgdata
-      - /var/lib/openproject/static:/var/openproject/assets
-    ports:
-      - "8080:8080"
