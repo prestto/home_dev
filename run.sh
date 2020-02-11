@@ -1,14 +1,34 @@
 #!/bin/bash
-function run_docker_env {
-    echo "running docker build"
-    docker-compose up
+function run_docker_gitlab {
+    echo "running docker GITLAB build for GITLAB"
+    docker-compose --project-directory . -f gitlab/docker-compose.yml up
 }
+
+function run_docker_taiga {
+    echo "running docker TAIGA build for GITLAB"
+    docker-compose --project-directory . -f taiga/docker-compose.yml up
+}
+
+function run_docker_gitlab_raspberry {
+    echo "running docker GITLAB build for RASPBERRY"
+    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up
+}
+
+function run_docker_taiga_raspberry {
+    echo "running docker TAIGA build for RASPBERRY"
+    docker-compose --project-directory . -f taiga/docker-compose.yml up
+}
+
+
 
 function usage {
         echo "Usage: $0 <ACTION>"
         echo "Parameters :"
         echo " - ACTION values :"
-        echo "   * dev                      - Launching an enviromane containing gitlab and open project."
+        echo "   * git                                  - Launch git for linux."
+        echo "   * taiga                                - Launch taiga for linux"
+        echo "   * git_raspberry                        - Launch git for raspberry"
+        echo "   * taiga_raspberry                      - Launch taiga for raspberry"
 }
 
 
@@ -30,8 +50,17 @@ then
 fi
 
 case "$1" in
-        dev)
-                run_docker_env
+        git)
+                run_docker_gitlab
+                ;;
+        taiga)
+                run_docker_taiga
+                ;;
+        git_raspberry)
+                run_docker_gitlab_raspberry
+                ;;
+        taiga_raspberry)
+                run_docker_taiga_raspberry
                 ;;
         *)
                 echo "Unvalid environment detected (${1})"
