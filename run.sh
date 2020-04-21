@@ -11,7 +11,7 @@ function run_docker_taiga {
 
 function run_docker_gitlab_raspberry {
     echo "running docker GITLAB build for RASPBERRY"
-    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up
+    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d
 }
 
 function run_docker_taiga_raspberry {
@@ -45,7 +45,7 @@ fi
 CAN_I_RUN_SUDO=$(sudo -n uptime 2>&1|grep "load"|wc -l)
 if [ ${CAN_I_RUN_SUDO} -gt 0 ]
 then
-    nicecho "normal" "removing pyc files"
+    echo "normal" "removing pyc files"
     sudo find . -name "*.pyc" -exec rm -f {} \;
 fi
 
