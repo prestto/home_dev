@@ -4,15 +4,12 @@ services:
   gitlab:
     image: "gitlab/gitlab-ce:latest"
     restart: always
-    hostname: "gitlab.dali.com"
+    hostname: "gitlab.example.com"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url "https://gitlab.dali.com"
+      - GITLAB_SKIP_PG_UPGRADE: "true"
     ports:
       - "80:80"
       - "443:443"
       - "22:22"
-#    volumes:
-#      - /srv/gitlab/config:/etc/gitlab
-#      - /srv/gitlab/logs:/var/log/gitlab
-#      - /srv/gitlab/data:/var/opt/gitlab
