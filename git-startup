@@ -1,0 +1,11 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          start-git-raspberry.sh
+# Short-Description: Set console font and keymap
+### END INIT INFO
+
+if [ -f /home/pi/projects/home_dev/run.sh ]; then
+    echo "dali pi: setting up gitlab on raspberry"
+    /home/pi/projects/home_dev/run.sh git_raspberry
+fi
+
