@@ -29,6 +29,7 @@ services:
       - "./nginx/certs/:/etc/ssl/certs/"
       - "./nginx/private/:/etc/ssl/private/"
       - "./nginx/snippets/:/etc/nginx/snippets/"
+      - "./nginx/conf/default.conf:/etc/nginx/nginx.conf"
     depends_on:
       - gitlab
 
