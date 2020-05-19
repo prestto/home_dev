@@ -1,3 +1,4 @@
 nginx/private/server.key
 nginx/certs/*
 !nginx/certs/server.crt
+.vscode
