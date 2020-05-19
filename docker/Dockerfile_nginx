@@ -7,7 +7,7 @@ RUN mkdir /etc/nginx/conf.d/sites-enabled
 ADD nginx/conf.d/sites-available/virtual.conf /etc/nginx/conf.d/sites-available/virtual.conf
 RUN cp /etc/nginx/conf.d/sites-available/virtual.conf /etc/nginx/conf.d/sites-enabled/virtual.conf
 
-# Replace the standard nginx conf
-RUN sed -i 's|include /etc/nginx/conf.d/\*.conf;|include /etc/nginx/conf.d/sites-enabled/*.conf;|' /etc/nginx/nginx.conf
+ADD nginx/conf.d/sites-available/ssh.conf /etc/nginx/conf.d/sites-available/ssh.conf
+RUN cp /etc/nginx/conf.d/sites-available/ssh.conf /etc/nginx/conf.d/sites-enabled/ssh.conf
 
 WORKDIR /
