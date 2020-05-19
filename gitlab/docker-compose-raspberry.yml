@@ -7,4 +7,3 @@ services:
       - /ssd/srv/gitlab/config:/etc/gitlab
       - /ssd/srv/gitlab/logs:/var/log/gitlab
       - /ssd/srv/gitlab/data:/var/opt/gitlab
-
