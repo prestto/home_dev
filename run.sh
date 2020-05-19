@@ -19,7 +19,10 @@ function run_docker_taiga_raspberry {
     docker-compose --project-directory . -f taiga/docker-compose.yml up
 }
 
-
+function stop {
+    echo "Stopping GITLAB build for RASPBERRY"
+    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml stop
+}
 
 function usage {
         echo "Usage: $0 <ACTION>"
@@ -29,6 +32,7 @@ function usage {
         echo "   * taiga                                - Launch taiga for linux"
         echo "   * git_raspberry                        - Launch git for raspberry"
         echo "   * taiga_raspberry                      - Launch taiga for raspberry"
+        echo "   * stop                                 - Stop git for raspberry"
 }
 
 
@@ -61,6 +65,9 @@ case "$1" in
                 ;;
         taiga_raspberry)
                 run_docker_taiga_raspberry
+                ;;
+        stop)
+                stop
                 ;;
         *)
                 echo "Unvalid environment detected (${1})"
