@@ -1,7 +1,7 @@
 #!/bin/bash
 function run_docker_gitlab {
     echo "running docker GITLAB build for GITLAB"
-    docker-compose --project-directory . -f gitlab/docker-compose.yml up
+    docker-compose --project-directory . -f gitlab/docker-compose.yml up -d
 }
 
 function run_docker_taiga {
