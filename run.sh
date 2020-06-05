@@ -1,22 +1,23 @@
 #!/bin/bash
 function run_docker_gitlab {
-    echo "running docker GITLAB build for GITLAB"
-    docker-compose --project-directory . -f gitlab/docker-compose.yml up -d
-}
+    ARCH=$(arch)
 
-function run_docker_taiga {
-    echo "running docker TAIGA build for GITLAB"
-    docker-compose --project-directory . -f taiga/docker-compose.yml up
-}
-
-function run_docker_gitlab_raspberry {
-    echo "running docker GITLAB build for RASPBERRY"
-    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d
-}
-
-function run_docker_taiga_raspberry {
-    echo "running docker TAIGA build for RASPBERRY"
-    docker-compose --project-directory . -f taiga/docker-compose.yml up
+    case $ARCH in
+            armv7l)
+                    echo "ARM system detected."
+                    echo "running docker GITLAB build."
+                    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d
+                    ;;
+            x86_64)
+                    echo "Linux x86_64 system detected."
+                    echo "running docker GITLAB build for GITLAB"
+                    docker-compose --project-directory . -f gitlab/docker-compose.yml up -d
+                    ;;
+            *)
+                    echo "Unrecognized architecture ($ARCH)"
+                    exit 1
+                    ;;
+    esac
 }
 
 function stop {
@@ -24,15 +25,27 @@ function stop {
     docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml stop
 }
 
+function kill80 {
+    echo "Killing processes on port 80."
+    PROCESSES=$(sudo lsof -t -i tcp:80 -s tcp:listen)
+    
+    if [[ $PROCESSES ]]
+    then
+        echo "killing processes:"
+        echo $PROCESSES
+        sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+    else
+        echo "nothing to kill"
+    fi
+}
+
 function usage {
         echo "Usage: $0 <ACTION>"
         echo "Parameters :"
         echo " - ACTION values :"
         echo "   * git                                  - Launch git for linux."
-        echo "   * taiga                                - Launch taiga for linux"
-        echo "   * git_raspberry                        - Launch git for raspberry"
-        echo "   * taiga_raspberry                      - Launch taiga for raspberry"
         echo "   * stop                                 - Stop git for raspberry"
+        echo "   * kill80                               - Kill process running on port 80."
 }
 
 
@@ -57,17 +70,11 @@ case "$1" in
         git)
                 run_docker_gitlab
                 ;;
-        taiga)
-                run_docker_taiga
-                ;;
-        git_raspberry)
-                run_docker_gitlab_raspberry
-                ;;
-        taiga_raspberry)
-                run_docker_taiga_raspberry
-                ;;
         stop)
                 stop
+                ;;
+        kill80)
+                kill80
                 ;;
         *)
                 echo "Unvalid environment detected (${1})"
