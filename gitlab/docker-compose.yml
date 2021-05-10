@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile_nginx
     ports:
-      - "22:22"
+      - "30022:22"
       - "80:80"
       - "443:443"
     networks:
