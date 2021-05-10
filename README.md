@@ -10,15 +10,51 @@ If you wish to do more that just an example project, you will also need addition
 
 Additionally, if there is a problem with git, or if the raspberry is disconnected, it's practival that gitlab restarts with the raspberry.  A guide for setting this up using init.d is included below.
 
+## Docker
+
+```bash
+# deps
+sudo apt-get install -y libffi-dev libssl-dev
+sudo apt install python3-dev
+sudo apt-get install -y python3 python3-pip
+
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+
+sudo sh get-docker.sh
+
+sudo usermod -aG docker tp
+
+# test
+docker run hello-world
+
+# docke compose
+sudo pip3 install docker-compose
+
+sudo groupadd docker
+
+sudo usermod -aG docker $USER
+```
+
 ## Mount your SSD
 
 Mounting yous ssd essentially means attaching the filesystem of the ssd to a point in the filesystem of the raspberry.  There are 3 stages to this:
 
-- Find your ssd's uuid
-- create a mountpoint
-- mount the ssd
-- check that it can be written to
-- configure the /etc/fstab, so that steps 1-3 above can be automated
+```bash
+# to find the disk's UUID
+sudo blkid
+sudo fdisk -l
+
+# make a mount point
+mkdir /media/ssd
+
+# open fstab
+nano /etc/fstab
+
+# mount the disk using a command like
+UUID=89596814-b32e-446b-ac1c-ecd2daf0d4cd /media/ssd ext4 defaults,nofail 0 0
+```
 
 ## Run git on startup
 
