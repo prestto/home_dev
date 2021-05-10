@@ -4,6 +4,12 @@ services:
   gitlab:
     image: "ulm0/gitlab"
     volumes:
-      - /media/ssd/srv/gitlab/config:/etc/gitlab
-      - /media/ssd/srv/gitlab/logs:/var/log/gitlab
-      - /media/ssd/srv/gitlab/data:/var/opt/gitlab
+    - type: bind
+      source: /media/ssd/srv/gitlab/config
+      target: /etc/gitlab/config
+    - type: bind
+      source: /media/ssd/srv/gitlab/logs
+      target: /etc/gitlab/logs
+    - type: bind
+      source: /media/ssd/srv/gitlab/data
+      target: /etc/gitlab/data
