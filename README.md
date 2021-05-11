@@ -75,3 +75,12 @@ The following giles should be created:
 external_url "https://gitlab.dali.com"
 nginx['redirect_http_to_https'] = true
 ```
+
+## fix
+
+https://hrushi-deshmukh.medium.com/ros%C2%B9-on-raspberry-pi-with-docker-50ab4c70dadc
+
+```bash
+wget http://ftp.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb
+sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb 
+```

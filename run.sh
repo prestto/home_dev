@@ -5,8 +5,11 @@ function run_docker_gitlab {
     case $ARCH in
             armv7l)
                     echo "ARM system detected."
+                    echo "Updating permissions"
+                    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml run gitlab update-permissions
+
                     echo "running docker GITLAB build."
-                    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d
+                    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d --privileged
                     ;;
             x86_64)
                     echo "Linux x86_64 system detected."
