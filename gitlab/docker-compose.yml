@@ -26,12 +26,13 @@ services:
     networks:
       - app-network
     volumes:
-      - "./nginx/certs/:/etc/ssl/certs/"
-      - "./nginx/private/:/etc/ssl/private/"
-      - "./nginx/snippets/:/etc/nginx/snippets/"
-      - "./nginx/conf/default.conf:/etc/nginx/nginx.conf"
+    - type: bind
+      source: ./nginx/conf
+      target: /conf
     depends_on:
       - gitlab
+    label: "blah"
+    command: nginx -c /conf/gitlab-omnibus-ssl-nginx.conf
 
 networks:
   app-network:
