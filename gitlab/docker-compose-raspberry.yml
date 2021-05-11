@@ -3,6 +3,7 @@ version: "3"
 services:
   gitlab:
     image: "ulm0/gitlab"
+    privileged: true
     volumes:
     - type: bind
       source: /media/ssd/srv/gitlab/config
