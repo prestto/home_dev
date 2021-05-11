@@ -6,7 +6,7 @@ function run_docker_gitlab {
             armv7l)
                     echo "ARM system detected."
                     echo "running docker GITLAB build."
-                    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml up -d
+                    docker-compose --project-directory . -f docker/docker-compose.yml up -d
                     ;;
             x86_64)
                     echo "Linux x86_64 system detected."
