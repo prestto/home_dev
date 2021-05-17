@@ -3,6 +3,7 @@ version: "3"
 services:
   gitlab:
     image: "ulm0/gitlab"
+    hostname: gitlab.dali.com
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.dali.com'
@@ -28,3 +29,20 @@ services:
     - type: bind
       source: ./gitlab/certs
       target: /etc/gitlab/ssl
+    networks:
+      - gitlab
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    restart: unless-stopped
+    platform: linux/amd64
+    depends_on:
+      - gitlab
+    volumes:
+      - /media/ssd/srv/config/gitlab-runner:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitlab
+    
+networks:
+  gitlab:
