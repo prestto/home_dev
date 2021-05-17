@@ -11,7 +11,7 @@ function run_docker_gitlab {
             x86_64)
                     echo "Linux x86_64 system detected."
                     echo "running docker GITLAB build for GITLAB"
-                    docker-compose --project-directory . -f gitlab/docker-compose.yml up -d
+                    docker-compose --project-directory . -f docker/docker-compose.yml up -d
                     ;;
             *)
                     echo "Unrecognized architecture ($ARCH)"
@@ -22,7 +22,7 @@ function run_docker_gitlab {
 
 function stop {
     echo "Stopping GITLAB build for RASPBERRY"
-    docker-compose --project-directory . -f gitlab/docker-compose.yml -f gitlab/docker-compose-raspberry.yml stop
+    docker-compose --project-directory . -f docker/docker-compose.yml -f docker/docker-compose-raspberry.yml stop
 }
 
 function kill80 {

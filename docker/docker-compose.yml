@@ -1,23 +1,14 @@
-web:
-  image: 'ulm0/gitlab'
-  restart: always
-  hostname: 'gitlab.dali.com'
-  environment:
-    GITLAB_OMNIBUS_CONFIG: |
-      external_url 'https://gitlab.dali.com'
+version: "3"
+
+services:
+
+  gitlab:
+    image: "gitlab/gitlab-ce:latest"
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url "http://gitlab.dali.com"
       GITLAB_SKIP_PG_UPGRADE: "true"
-      gitlab_rails['gitlab_shell_ssh_port'] = 2224
-  ports:
-    - '80:80'
-    - '443:443'
-    - '2224:22'
-  volumes:
-  - type: bind
-    source: /media/ssd/srv/gitlab/config
-    target: /etc/gitlab/config
-  - type: bind
-    source: /media/ssd/srv/gitlab/logs
-    target: /etc/gitlab/logs
-  - type: bind
-    source: /media/ssd/srv/gitlab/data
-    target: /etc/gitlab/data
+    expose:
+      - "80"
+      - "22"

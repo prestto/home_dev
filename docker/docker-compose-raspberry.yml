@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  gitlab:
+    image: "ulm0/gitlab"
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.dali.com'
+        GITLAB_SKIP_PG_UPGRADE: "true"
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        letsencrypt['enable'] = false
+        nginx['redirect_http_to_https'] = true
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2224:22'
+    privileged: true
+    volumes:
+    - type: bind
+      source: /media/ssd/srv/gitlab/config
+      target: /etc/gitlab/config
+    - type: bind
+      source: /media/ssd/srv/gitlab/logs
+      target: /etc/gitlab/logs
+    - type: bind
+      source: /media/ssd/srv/gitlab/data
+      target: /etc/gitlab/data
+    - type: bind
+      source: ./gitlab/certs
+      target: /etc/gitlab/ssl
