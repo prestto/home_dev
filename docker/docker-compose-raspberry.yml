@@ -5,6 +5,7 @@ services:
     image: "ulm0/gitlab"
     hostname: gitlab.dali.com
     environment:
+      GITLAB_HOME: /srv/gitlab
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.dali.com'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
@@ -18,13 +19,13 @@ services:
     volumes:
     - type: bind
       source: /media/ssd/srv/gitlab/config
-      target: /etc/gitlab/config
+      target: /srv/gitlab/config
     - type: bind
       source: /media/ssd/srv/gitlab/logs
-      target: /etc/gitlab/logs
+      target: /var/log/gitlab
     - type: bind
       source: /media/ssd/srv/gitlab/data
-      target: /etc/gitlab/data
+      target: /var/opt/gitlab
     - type: bind
       source: ./gitlab/certs
       target: /etc/gitlab/ssl
