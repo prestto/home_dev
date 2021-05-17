@@ -2,12 +2,12 @@ version: "3"
 
 services:
   gitlab:
-    image: "ulm0/gitlab"
-    hostname: gitlab.dali.com
+    image: "ulm0/gitlab:12.10.0"
+    hostname: gitlab.dali.dev
     environment:
       GITLAB_HOME: /srv/gitlab
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.dali.com'
+        external_url 'https://gitlab.dali.dev'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         letsencrypt['enable'] = false
         nginx['redirect_http_to_https'] = true

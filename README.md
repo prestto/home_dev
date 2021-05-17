@@ -66,14 +66,55 @@ This can be done using the commmand
 cp /home/pi/projects/home_dev/git-startup /etc/init.d/git-startup
 ```
 
-## Gitlab setup
+## Create an ssl certificate for HTTPS
 
-The following giles should be created:
+```bash
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./ssl/private/nginx-selfsigned.key -out ./ssl/certs/nginx-selfsigned.crt
+
+sudo openssl dhparam -out ./ssl/certs/dhparam.pem 2048
+```
+## Gitlab HTTPS setup
+
+To setup https in gitlab, follow this [guide](https://gitlab.com/gitlab-org/omnibus-gitlab/-/blob/master/doc/settings/nginx.md#enable-https)
+
+```bash
 
 ```
 
-external_url "https://gitlab.dali.com"
-nginx['redirect_http_to_https'] = true
+## Git
+
+```bash
+export GITLAB_HOME=/media/ssd/srv/gitlab
+
+# to reconfigure gitlab as necessary
+nohup /opt/gitlab/embedded/bin/runsvdir-start &
+sudo gitlab-ctl reconfigure
+
+# to run with docker run
+docker run -it -v /media/ssd/srv/gitlab/config:/srv/gitlab -v /media/ssd/srv/gitlab/logs:/var/log/gitlab -v /media/ssd/srv/gitlab/data:/var/opt/gitlab  ulm0/gitlab:12.10.0 /bin/bash
+```
+
+## Gitlab runner
+
+To setup a gitlab runner on the pi, unfortunately i cant find a reliable containerized way (on raspberry), so we have to install it manually:
+
+```bash
+# add self to /etc/hosts
+sudo nano /etc/hosts
+
+# install gitlab runner
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+sudo apt-get install gitlab-runner
+
+# get the token
+sudo gitlab-runner register -n \
+    --url http://gitlab.dali.dev \
+    --registration-token <<<YOUR-TOKEN>>> \
+    --executor docker \
+    --description "Tester Runner" \
+    --docker-image "docker:stable" \
+    --docker-privileged
 ```
 
 ## fix
