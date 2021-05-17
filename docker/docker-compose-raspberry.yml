@@ -19,7 +19,7 @@ services:
     volumes:
     - type: bind
       source: /media/ssd/srv/gitlab/config
-      target: /srv/gitlab/config
+      target: /srv/gitlab
     - type: bind
       source: /media/ssd/srv/gitlab/logs
       target: /var/log/gitlab
