@@ -7,7 +7,6 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.dali.com'
-        GITLAB_SKIP_PG_UPGRADE: "true"
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         letsencrypt['enable'] = false
         nginx['redirect_http_to_https'] = true
